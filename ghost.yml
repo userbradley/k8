@@ -17,17 +17,16 @@ spec:
       containers:
         - name: ghost
           image: ghost:4-alpine
-      env:
-        - name: database__client
-          value: "mysql"
-        - name: database__connection__host
-          value: "db"
-        - name: database__connection__user
-          value: "root"
-        - name: database__connection__password
-          value: "replaceme"
-        - name: database__connection__database
-          value: "ghost"
-
           ports:
             - containerPort: 8080
+          env:
+            - name: database__client
+              value: "mysql"
+            - name: database__connection__host
+              value: "db"
+            - name: database__connection__user
+              value: "root"
+            - name: database__connection__password
+              value: "replaceme"
+            - name: database__connection__database
+              value: "ghost"
