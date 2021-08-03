@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: website
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghost
+  namespace: website
+  labels:
+    app: ghost
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ghost
+  template:
+    metadata:
+      labels:
+        app: ghost
+    spec:
+      containers:
+        - name: ghost
+          image: ghost:4-alpine
+          ports:
+          env:
+            - name: url
+              value: "http://localhost:8080"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ghost
+  labels:
+    app.kubernetes.io/name: ghost
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: ghost
